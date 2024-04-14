@@ -28,6 +28,7 @@ public sealed interface PagoEvento extends DomainEvent, OrdenSaga {
     @Builder
     record PagoRechazado(UUID ordenId,
                            Integer clienteId,
+                           Integer monto,
                            String mensaje,
                            Instant createdAt) implements PagoEvento {
     }
