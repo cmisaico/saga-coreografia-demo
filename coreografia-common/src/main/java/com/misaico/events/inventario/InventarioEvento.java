@@ -12,6 +12,7 @@ public interface InventarioEvento extends DomainEvent, OrdenSaga {
     @Builder
     record InventarioDescontado(UUID ordenId,
                                 UUID inventarioId,
+                                Integer productoId,
                                 Integer cantidad,
                                 Instant createdAt) implements InventarioEvento {
     }
@@ -19,7 +20,7 @@ public interface InventarioEvento extends DomainEvent, OrdenSaga {
     @Builder
     record InventarioRestaurado(UUID ordenId,
                                 UUID inventarioId,
-                                UUID productoid,
+                                Integer productoId,
                                 Integer cantidad,
                                 Instant createdAt) implements InventarioEvento {
     }
