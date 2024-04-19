@@ -1,10 +1,10 @@
 package com.misaico.orden.messaging.publisher;
 
-import com.misaico.events.orden.OrdenEvento;
+import com.misaico.common.events.orden.OrdenEvento;
 import com.misaico.orden.common.dto.OrdenCompraDto;
 import com.misaico.orden.common.service.OrdenEventoListener;
 import com.misaico.orden.messaging.mapper.OrdenEventoMapper;
-import com.misaico.publisher.EventoPublisher;
+import com.misaico.common.publisher.EventoPublisher;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;

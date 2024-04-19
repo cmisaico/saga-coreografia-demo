@@ -1,6 +1,6 @@
 package com.misaico.orden.messaging.config;
 
-import com.misaico.events.orden.OrdenEvento;
+import com.misaico.common.events.orden.OrdenEvento;
 import com.misaico.orden.common.service.OrdenEventoListener;
 import com.misaico.orden.messaging.publisher.OrdenEventoListenerImpl;
 import org.springframework.context.annotation.Bean;

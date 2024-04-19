@@ -1,8 +1,7 @@
 package com.misaico.inventario.application.service;
 
 
-import com.misaico.events.inventario.InventarioEstado;
-import com.misaico.events.pago.PagoEstado;
+import com.misaico.common.events.inventario.InventarioEstado;
 import com.misaico.inventario.application.entity.InventarioOrden;
 import com.misaico.inventario.application.entity.Producto;
 import com.misaico.inventario.application.mapper.EntityDtoMapper;
@@ -12,7 +11,7 @@ import com.misaico.inventario.common.dto.InventarioDescontadoRequest;
 import com.misaico.inventario.common.dto.InventarioOrdenDto;
 import com.misaico.inventario.common.exception.AgotadoException;
 import com.misaico.inventario.common.service.InventarioService;
-import com.misaico.utils.DuplicadoEventoValidador;
+import com.misaico.common.utils.DuplicadoEventoValidador;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

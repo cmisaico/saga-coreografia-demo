@@ -1,6 +1,6 @@
 package com.misaico.orden.common.dto;
 
-import com.misaico.events.orden.OrdenEstado;
+import com.misaico.common.events.orden.OrdenEstado;
 import lombok.Builder;
 
 import java.time.Instant;

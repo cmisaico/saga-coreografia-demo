@@ -2,8 +2,8 @@ package com.misaico.envio.messaging.mapper;
 
 import com.misaico.envio.common.dto.EnvioDto;
 import com.misaico.envio.common.dto.HorarioRequest;
-import com.misaico.events.envio.EnvioEvento;
-import com.misaico.events.orden.OrdenEvento;
+import com.misaico.common.events.envio.EnvioEvento;
+import com.misaico.common.events.orden.OrdenEvento;
 import java.time.Instant;
 
 public class MensajeDtoMapper {

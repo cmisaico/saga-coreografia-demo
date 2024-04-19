@@ -2,10 +2,10 @@ package com.misaico.envio.messaging.processor;
 
 import com.misaico.envio.common.service.EnvioService;
 import com.misaico.envio.messaging.mapper.MensajeDtoMapper;
-import com.misaico.events.envio.EnvioEvento;
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.exceptions.EventoYaProcesadoException;
-import com.misaico.processors.OrdenEventoProcesador;
+import com.misaico.common.events.envio.EnvioEvento;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.exceptions.EventoYaProcesadoException;
+import com.misaico.common.processors.OrdenEventoProcesador;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

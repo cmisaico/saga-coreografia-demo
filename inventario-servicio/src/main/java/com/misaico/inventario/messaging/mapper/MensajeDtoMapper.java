@@ -1,8 +1,8 @@
 package com.misaico.inventario.messaging.mapper;
 
-import com.misaico.events.inventario.InventarioEvento;
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.events.pago.PagoEvento;
+import com.misaico.common.events.inventario.InventarioEvento;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.events.pago.PagoEvento;
 import com.misaico.inventario.common.dto.InventarioDescontadoRequest;
 import com.misaico.inventario.common.dto.InventarioOrdenDto;
 import reactor.core.publisher.Mono;

@@ -1,6 +1,6 @@
 package com.misaico.pago.common.dto;
 
-import com.misaico.events.pago.PagoEstado;
+import com.misaico.common.events.pago.PagoEstado;
 import lombok.Builder;
 
 import java.util.UUID;

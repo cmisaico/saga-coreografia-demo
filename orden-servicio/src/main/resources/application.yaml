@@ -7,13 +7,24 @@ spring:
         producer:
           useNativeEncoding: true
       bindings:
-        ordenEventoProduce-out-0:
+#        ordenEventoProduce-out-0:
+#          destination: orden-eventos
+#        pagoProcesador-in-0:
+#          destination: pago-eventos
+#          group: orden-servicio-grupo
+#        inventarioProcesador-in-0:
+#          destination: inventario-eventos
+#          group: orden-servicio-grupo
+        orden-eventos-canal:
           destination: orden-eventos
         pagoProcesador-in-0:
           destination: pago-eventos
           group: orden-servicio-grupo
         inventarioProcesador-in-0:
           destination: inventario-eventos
+          group: orden-servicio-grupo
+        envioProcesador-in-0:
+          destination: envio-eventos
           group: orden-servicio-grupo
       kafka:
         binder:

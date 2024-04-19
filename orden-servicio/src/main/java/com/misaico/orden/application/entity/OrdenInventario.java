@@ -1,14 +1,12 @@
 package com.misaico.orden.application.entity;
 
-import com.misaico.events.inventario.InventarioEstado;
-import com.misaico.events.orden.OrdenEstado;
+import com.misaico.common.events.inventario.InventarioEstado;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @Data

@@ -11,8 +11,8 @@ import com.misaico.pago.common.dto.PagoProcessRequest;
 import com.misaico.pago.common.exception.ClienteNoEncontradoException;
 import com.misaico.pago.common.exception.InsuficienteSaldoException;
 import com.misaico.pago.common.service.PagoService;
-import com.misaico.events.pago.PagoEstado;
-import com.misaico.utils.DuplicadoEventoValidador;
+import com.misaico.common.events.pago.PagoEstado;
+import com.misaico.common.utils.DuplicadoEventoValidador;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class PagoServiceImpl implements PagoService {
     public Mono<PagoDto> procesar(PagoProcessRequest request) {
         return DuplicadoEventoValidador.validar(
                 this.pagoRepository.existsByOrdenId(request.ordenId()),
-                this.clienteRepository.findById(request.clienteid())
+                this.clienteRepository.findById(request.clienteId())
         ).switchIfEmpty(CLIENTE_NO_ENCONTRADO)
                 .filter(cliente -> cliente.getSaldo() >= request.importe())
                 .switchIfEmpty(SALDO_INSUFICIENTE)

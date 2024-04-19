@@ -1,7 +1,6 @@
 package com.misaico.orden.messaging.mapper;
 
-import com.misaico.events.envio.EnvioEvento;
-import com.misaico.events.orden.OrdenEvento;
+import com.misaico.common.events.orden.OrdenEvento;
 import com.misaico.orden.common.dto.OrdenCompraDto;
 
 import java.time.Instant;

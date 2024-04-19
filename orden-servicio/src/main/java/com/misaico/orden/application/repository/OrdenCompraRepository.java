@@ -1,6 +1,6 @@
 package com.misaico.orden.application.repository;
 
-import com.misaico.events.orden.OrdenEstado;
+import com.misaico.common.events.orden.OrdenEstado;
 import com.misaico.orden.application.entity.OrdenCompra;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;

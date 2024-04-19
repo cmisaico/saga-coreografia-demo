@@ -2,7 +2,7 @@ package com.misaico.envio.application.repository;
 
 
 import com.misaico.envio.application.entity.Envio;
-import com.misaico.events.envio.EnvioEstado;
+import com.misaico.common.events.envio.EnvioEstado;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

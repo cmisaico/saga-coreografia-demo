@@ -1,6 +1,5 @@
 package com.misaico.orden.application.service;
 
-import com.misaico.events.envio.EnvioEstado;
 import com.misaico.orden.application.mapper.EntityDtoMapper;
 import com.misaico.orden.application.repository.OrdenCompraRepository;
 import com.misaico.orden.common.dto.OrdenCompraDto;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.UUID;
 
 @Service

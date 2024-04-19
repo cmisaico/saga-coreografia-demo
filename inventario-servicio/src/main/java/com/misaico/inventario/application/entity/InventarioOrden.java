@@ -1,7 +1,6 @@
 package com.misaico.inventario.application.entity;
 
-import com.misaico.events.inventario.InventarioEstado;
-import com.misaico.events.pago.PagoEstado;
+import com.misaico.common.events.inventario.InventarioEstado;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,11 +1,11 @@
 package com.misaico.inventario.messaging.processor;
 
-import com.misaico.events.inventario.InventarioEvento;
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.exceptions.EventoYaProcesadoException;
+import com.misaico.common.events.inventario.InventarioEvento;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.exceptions.EventoYaProcesadoException;
 import com.misaico.inventario.common.service.InventarioService;
 import com.misaico.inventario.messaging.mapper.MensajeDtoMapper;
-import com.misaico.processors.OrdenEventoProcesador;
+import com.misaico.common.processors.OrdenEventoProcesador;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

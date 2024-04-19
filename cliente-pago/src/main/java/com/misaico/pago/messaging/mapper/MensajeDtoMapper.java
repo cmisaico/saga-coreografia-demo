@@ -2,8 +2,8 @@ package com.misaico.pago.messaging.mapper;
 
 import com.misaico.pago.common.dto.PagoDto;
 import com.misaico.pago.common.dto.PagoProcessRequest;
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.events.pago.PagoEvento;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.events.pago.PagoEvento;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
@@ -13,7 +13,7 @@ public class MensajeDtoMapper {
 
     public static PagoProcessRequest toPagoProcessRequest(OrdenEvento.OrdenCreada evento){
         return PagoProcessRequest.builder()
-                .clienteid(evento.clienteId())
+                .clienteId(evento.clienteId())
                 .ordenId(evento.ordenId())
                 .importe(evento.montoTotal())
                 .build();

@@ -1,10 +1,10 @@
 package com.misaico.pago.messaging.config;
 
 
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.events.pago.PagoEvento;
-import com.misaico.processors.OrdenEventoProcesador;
-import com.misaico.utils.MensajeConvertidor;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.events.pago.PagoEvento;
+import com.misaico.common.processors.OrdenEventoProcesador;
+import com.misaico.common.utils.MensajeConvertidor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

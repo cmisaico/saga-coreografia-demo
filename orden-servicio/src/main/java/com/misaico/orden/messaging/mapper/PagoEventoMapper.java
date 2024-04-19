@@ -1,7 +1,7 @@
 package com.misaico.orden.messaging.mapper;
 
-import com.misaico.events.pago.PagoEstado;
-import com.misaico.events.pago.PagoEvento;
+import com.misaico.common.events.pago.PagoEstado;
+import com.misaico.common.events.pago.PagoEvento;
 import com.misaico.orden.common.dto.OrdenPagoDto;
 
 public class PagoEventoMapper {

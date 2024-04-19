@@ -1,6 +1,6 @@
 package com.misaico.orden.messaging.mapper;
 
-import com.misaico.events.envio.EnvioEvento;
+import com.misaico.common.events.envio.EnvioEvento;
 import com.misaico.orden.common.dto.OrdenEnvioProgramado;
 
 public class EnvioEventoMapper {

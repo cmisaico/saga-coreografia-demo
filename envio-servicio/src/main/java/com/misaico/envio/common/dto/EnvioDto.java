@@ -1,7 +1,6 @@
 package com.misaico.envio.common.dto;
 
-import com.misaico.events.envio.EnvioEstado;
-import com.misaico.events.inventario.InventarioEstado;
+import com.misaico.common.events.envio.EnvioEstado;
 import lombok.Builder;
 
 import java.time.Instant;

@@ -1,6 +1,6 @@
 package com.misaico.orden.application.entity;
 
-import com.misaico.events.pago.PagoEstado;
+import com.misaico.common.events.pago.PagoEstado;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

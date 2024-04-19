@@ -1,11 +1,8 @@
 package com.misaico.orden.messaging.mapper;
 
-import com.misaico.events.envio.EnvioEvento;
-import com.misaico.events.inventario.InventarioEstado;
-import com.misaico.events.inventario.InventarioEvento;
+import com.misaico.common.events.inventario.InventarioEstado;
+import com.misaico.common.events.inventario.InventarioEvento;
 import com.misaico.orden.common.dto.OrdenInventarioDto;
-
-import java.time.Instant;
 
 public class InventarioEventoMapper {
 

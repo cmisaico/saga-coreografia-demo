@@ -1,6 +1,6 @@
 package com.misaico.orden.application.service;
 
-import com.misaico.events.orden.OrdenEstado;
+import com.misaico.common.events.orden.OrdenEstado;
 import com.misaico.orden.application.mapper.EntityDtoMapper;
 import com.misaico.orden.application.repository.OrdenCompraRepository;
 import com.misaico.orden.common.dto.OrdenCompraDto;

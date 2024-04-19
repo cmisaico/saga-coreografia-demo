@@ -1,9 +1,9 @@
 package com.misaico.orden.messaging.config;
 
-import com.misaico.events.DomainEvent;
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.processors.EventoProcesador;
-import com.misaico.utils.MensajeConvertidor;
+import com.misaico.common.events.DomainEvent;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.processors.EventoProcesador;
+import com.misaico.common.utils.MensajeConvertidor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.support.KafkaHeaders;

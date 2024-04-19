@@ -1,6 +1,6 @@
 package com.misaico.envio.application.entity;
 
-import com.misaico.events.envio.EnvioEstado;
+import com.misaico.common.events.envio.EnvioEstado;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

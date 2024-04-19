@@ -1,12 +1,12 @@
 package com.misaico.orden.messaging.processor;
 
-import com.misaico.events.inventario.InventarioEvento;
-import com.misaico.events.orden.OrdenEvento;
+import com.misaico.common.events.inventario.InventarioEvento;
+import com.misaico.common.events.orden.OrdenEvento;
 import com.misaico.orden.common.service.OrdenCumplimientoService;
 import com.misaico.orden.common.service.inventario.InventarioComponenteEstadoListener;
 import com.misaico.orden.messaging.mapper.InventarioEventoMapper;
 import com.misaico.orden.messaging.mapper.OrdenEventoMapper;
-import com.misaico.processors.InventarioEventoProcesador;
+import com.misaico.common.processors.InventarioEventoProcesador;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

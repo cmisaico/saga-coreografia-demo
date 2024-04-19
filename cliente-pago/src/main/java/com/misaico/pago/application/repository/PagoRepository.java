@@ -2,7 +2,7 @@ package com.misaico.pago.application.repository;
 
 
 import com.misaico.pago.application.entity.ClientePago;
-import com.misaico.events.pago.PagoEstado;
+import com.misaico.common.events.pago.PagoEstado;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

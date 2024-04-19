@@ -1,11 +1,11 @@
 package com.misaico.orden.messaging.config;
 
-import com.misaico.events.envio.EnvioEvento;
-import com.misaico.events.inventario.InventarioEvento;
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.events.pago.PagoEvento;
-import com.misaico.processors.EventoProcesador;
-import com.misaico.publisher.EventoPublisher;
+import com.misaico.common.events.envio.EnvioEvento;
+import com.misaico.common.events.inventario.InventarioEvento;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.events.pago.PagoEvento;
+import com.misaico.common.processors.EventoProcesador;
+import com.misaico.common.publisher.EventoPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,10 +1,10 @@
 package com.misaico.orden.messaging.processor;
 
-import com.misaico.events.envio.EnvioEvento;
-import com.misaico.events.orden.OrdenEvento;
+import com.misaico.common.events.envio.EnvioEvento;
+import com.misaico.common.events.orden.OrdenEvento;
 import com.misaico.orden.common.service.envio.EnvioComponenteEstadoListener;
 import com.misaico.orden.messaging.mapper.EnvioEventoMapper;
-import com.misaico.processors.EnvioEventoProcesado;
+import com.misaico.common.processors.EnvioEventoProcesado;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

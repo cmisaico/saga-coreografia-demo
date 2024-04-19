@@ -1,7 +1,6 @@
 package com.misaico.orden.application.entity;
 
-import com.misaico.events.envio.EnvioEstado;
-import com.misaico.events.orden.OrdenEstado;
+import com.misaico.common.events.orden.OrdenEstado;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

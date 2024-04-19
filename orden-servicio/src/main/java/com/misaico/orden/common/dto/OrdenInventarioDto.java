@@ -1,6 +1,6 @@
 package com.misaico.orden.common.dto;
 
-import com.misaico.events.inventario.InventarioEstado;
+import com.misaico.common.events.inventario.InventarioEstado;
 import lombok.Builder;
 
 import java.util.UUID;

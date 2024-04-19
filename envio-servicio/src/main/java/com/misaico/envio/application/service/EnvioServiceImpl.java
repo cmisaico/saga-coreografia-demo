@@ -7,7 +7,7 @@ import com.misaico.envio.application.repository.EnvioRepository;
 import com.misaico.envio.common.dto.EnvioDto;
 import com.misaico.envio.common.dto.HorarioRequest;
 import com.misaico.envio.common.service.EnvioService;
-import com.misaico.events.envio.EnvioEstado;
+import com.misaico.common.events.envio.EnvioEstado;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

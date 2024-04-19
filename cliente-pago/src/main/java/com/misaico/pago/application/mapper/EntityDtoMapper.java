@@ -7,7 +7,7 @@ import com.misaico.pago.common.dto.PagoProcessRequest;
 public class EntityDtoMapper {
     public static ClientePago toClientePago(PagoProcessRequest request){
         return ClientePago.builder()
-                .clienteId(request.clienteid())
+                .clienteId(request.clienteId())
                 .ordenId(request.ordenId())
                 .importe(request.importe())
                 .build();

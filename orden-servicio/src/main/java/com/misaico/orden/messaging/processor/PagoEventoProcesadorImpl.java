@@ -1,12 +1,12 @@
 package com.misaico.orden.messaging.processor;
 
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.events.pago.PagoEvento;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.events.pago.PagoEvento;
 import com.misaico.orden.common.service.OrdenCumplimientoService;
 import com.misaico.orden.common.service.pago.PagoComponenteEstadoListener;
 import com.misaico.orden.messaging.mapper.OrdenEventoMapper;
 import com.misaico.orden.messaging.mapper.PagoEventoMapper;
-import com.misaico.processors.PagoEventoProcesador;
+import com.misaico.common.processors.PagoEventoProcesador;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

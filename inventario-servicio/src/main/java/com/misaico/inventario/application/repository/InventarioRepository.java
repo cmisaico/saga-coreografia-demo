@@ -1,7 +1,7 @@
 package com.misaico.inventario.application.repository;
 
 
-import com.misaico.events.inventario.InventarioEstado;
+import com.misaico.common.events.inventario.InventarioEstado;
 import com.misaico.inventario.application.entity.InventarioOrden;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;

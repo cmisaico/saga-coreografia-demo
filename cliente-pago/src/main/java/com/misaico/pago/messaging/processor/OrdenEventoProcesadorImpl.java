@@ -1,11 +1,11 @@
 package com.misaico.pago.messaging.processor;
 
 import com.misaico.pago.common.service.PagoService;
-import com.misaico.events.orden.OrdenEvento;
-import com.misaico.events.pago.PagoEvento;
-import com.misaico.exceptions.EventoYaProcesadoException;
+import com.misaico.common.events.orden.OrdenEvento;
+import com.misaico.common.events.pago.PagoEvento;
+import com.misaico.common.exceptions.EventoYaProcesadoException;
 import com.misaico.pago.messaging.mapper.MensajeDtoMapper;
-import com.misaico.processors.OrdenEventoProcesador;
+import com.misaico.common.processors.OrdenEventoProcesador;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
