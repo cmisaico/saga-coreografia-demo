@@ -1,8 +1,9 @@
-package com.misaico.pago;
+package com.misaico.inventario;
 
+import com.misaico.common.events.inventario.InventarioEvento;
 import com.misaico.common.events.orden.OrdenEvento;
 import com.misaico.common.events.pago.PagoEvento;
-import com.misaico.pago.application.repository.ClienteRepository;
+import com.misaico.inventario.application.repository.ProductoRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,34 +22,34 @@ import java.util.function.Supplier;
 
 
 @TestPropertySource(properties = {
-        "spring.cloud.function.definition=processor;ordenEventoProducer;pagoEventoConsumer",
+        "spring.cloud.function.definition=processor;ordenEventoProducer;inventarioEventoConsumer",
         "spring.cloud.stream.bindings.ordenEventoProducer-out-0.destination=orden-eventos",
-        "spring.cloud.stream.bindings.pagoEventoConsumer-in-0.destination=pago-eventos",
+        "spring.cloud.stream.bindings.inventarioEventoConsumer-in-0.destination=inventario-eventos",
 })
-public class PagoSeviceTest extends AbstractIntegrationTest {
+public class InventarioServiceTest extends AbstractIntegrationTest {
 
     private static final Sinks.Many<OrdenEvento> reqSink = Sinks.many().unicast().onBackpressureBuffer();
-    private static final Sinks.Many<PagoEvento> resSink = Sinks.many().unicast().onBackpressureBuffer();
-    private static final Flux<PagoEvento> resFlux = resSink.asFlux().cache(0);
+    private static final Sinks.Many<InventarioEvento> resSink = Sinks.many().unicast().onBackpressureBuffer();
+    private static final Flux<InventarioEvento> resFlux = resSink.asFlux().cache(0);
 
     @Autowired
-    private ClienteRepository repository;
+    private ProductoRepository repository;
 
     @Test
     public void deductAndRefundTest(){
 
         // deduct payment
         var orderCreatedEvent = TestDataUtil.crearOrdenCreadoEvento(1, 1, 2, 3);
-        expectEvent(orderCreatedEvent, PagoEvento.PagoDescontado.class, e -> {
-            Assertions.assertNotNull(e.pagoId());
+        expectEvent(orderCreatedEvent, InventarioEvento.InventarioDescontado.class, e -> {
+            Assertions.assertNotNull(e.inventarioId());
             Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
-            Assertions.assertEquals(6, e.monto());
+            Assertions.assertEquals(3, e.cantidad());
         });
 
         // check balance
         this.repository.findById(1)
                 .as(StepVerifier::create)
-                .consumeNextWith(c -> Assertions.assertEquals(94, c.getSaldo()))
+                .consumeNextWith(c -> Assertions.assertEquals(7, c.getCantidadDisponible()))
                 .verifyComplete();
 
         // duplicate event
@@ -56,16 +57,16 @@ public class PagoSeviceTest extends AbstractIntegrationTest {
 
         // cancelled event & refund
         var cancelledEvent = TestDataUtil.crearOrdenCanceladoEvento(orderCreatedEvent.ordenId());
-        expectEvent(cancelledEvent, PagoEvento.PagoReembolsado.class, e -> {
-            Assertions.assertNotNull(e.pagoId());
+        expectEvent(cancelledEvent, InventarioEvento.InventarioRestaurado.class, e -> {
+            Assertions.assertNotNull(e.inventarioId());
             Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
-            Assertions.assertEquals(6, e.monto());
+            Assertions.assertEquals(3, e.cantidad());
         });
 
         // check balance
         this.repository.findById(1)
                 .as(StepVerifier::create)
-                .consumeNextWith(c -> Assertions.assertEquals(100, c.getSaldo()))
+                .consumeNextWith(c -> Assertions.assertEquals(10, c.getCantidadDisponible()))
                 .verifyComplete();
 
     }
@@ -77,22 +78,12 @@ public class PagoSeviceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void customerNotFoundTest(){
-        var orderCreatedEvent = TestDataUtil.crearOrdenCreadoEvento(10, 1, 2, 3);
-        expectEvent(orderCreatedEvent, PagoEvento.PagoRechazado.class, e -> {
+    public void outOfStockErrorTest(){
+        var orderCreatedEvent = TestDataUtil.crearOrdenCreadoEvento(1, 1, 2, 11);
+        expectEvent(orderCreatedEvent, InventarioEvento.InventarioRechazado.class, e -> {
             Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
-            Assertions.assertEquals(6, e.monto());
-            Assertions.assertEquals("Cliente no encontrado", e.mensaje());
-        });
-    }
-
-    @Test
-    public void insufficientBalanceTest(){
-        var orderCreatedEvent = TestDataUtil.crearOrdenCreadoEvento(1, 1, 2, 51);
-        expectEvent(orderCreatedEvent, PagoEvento.PagoRechazado.class, e -> {
-            Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
-            Assertions.assertEquals(102, e.monto());
-            Assertions.assertEquals("Saldo insuficiente", e.mensaje());
+            Assertions.assertEquals(11, e.cantidad());
+            Assertions.assertEquals("No hay stock", e.mensaje());
         });
     }
 
@@ -125,7 +116,7 @@ public class PagoSeviceTest extends AbstractIntegrationTest {
         }
 
         @Bean
-        public Consumer<Flux<PagoEvento>> pagoEventoConsumer(){
+        public Consumer<Flux<InventarioEvento>> inventarioEventoConsumer(){
             return f -> f.doOnNext(resSink::tryEmitNext).subscribe();
         }
 

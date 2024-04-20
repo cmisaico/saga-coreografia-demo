@@ -1,8 +1,9 @@
-package com.misaico.pago;
+package com.misaico.envio;
 
+import com.misaico.common.events.envio.EnvioEstado;
+import com.misaico.common.events.envio.EnvioEvento;
 import com.misaico.common.events.orden.OrdenEvento;
-import com.misaico.common.events.pago.PagoEvento;
-import com.misaico.pago.application.repository.ClienteRepository;
+import com.misaico.envio.application.repository.EnvioRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,80 +22,70 @@ import java.util.function.Supplier;
 
 
 @TestPropertySource(properties = {
-        "spring.cloud.function.definition=processor;ordenEventoProducer;pagoEventoConsumer",
+        "spring.cloud.function.definition=processor;ordenEventoProducer;envioEventoConsumer",
         "spring.cloud.stream.bindings.ordenEventoProducer-out-0.destination=orden-eventos",
-        "spring.cloud.stream.bindings.pagoEventoConsumer-in-0.destination=pago-eventos",
+        "spring.cloud.stream.bindings.envioEventoConsumer-in-0.destination=envio-eventos",
 })
-public class PagoSeviceTest extends AbstractIntegrationTest {
+public class EnvioSeviceTest extends AbstractIntegrationTest {
 
     private static final Sinks.Many<OrdenEvento> reqSink = Sinks.many().unicast().onBackpressureBuffer();
-    private static final Sinks.Many<PagoEvento> resSink = Sinks.many().unicast().onBackpressureBuffer();
-    private static final Flux<PagoEvento> resFlux = resSink.asFlux().cache(0);
+    private static final Sinks.Many<EnvioEvento> resSink = Sinks.many().unicast().onBackpressureBuffer();
+    private static final Flux<EnvioEvento> resFlux = resSink.asFlux().cache(0);
 
     @Autowired
-    private ClienteRepository repository;
+    private EnvioRepository repository;
+
 
     @Test
-    public void deductAndRefundTest(){
+    public void planearYCancelarTest(){
 
-        // deduct payment
-        var orderCreatedEvent = TestDataUtil.crearOrdenCreadoEvento(1, 1, 2, 3);
-        expectEvent(orderCreatedEvent, PagoEvento.PagoDescontado.class, e -> {
-            Assertions.assertNotNull(e.pagoId());
-            Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
-            Assertions.assertEquals(6, e.monto());
-        });
+        // emit created event, expect no event
+        var createdEvent = TestDataUtil.crearOrdenCreadoEvento(1, 1, 2, 3);
+        expectNoEvent(createdEvent);
 
-        // check balance
-        this.repository.findById(1)
+        // duplicate event, expect no event
+//        expectNoEvent(createdEvent);
+
+        // check table for just 1 record
+        this.repository.findByOrdenIdAndEstado(createdEvent.ordenId(), EnvioEstado.PENDIENTE)
                 .as(StepVerifier::create)
-                .consumeNextWith(c -> Assertions.assertEquals(94, c.getSaldo()))
+                .consumeNextWith(s -> {
+                    Assertions.assertEquals(createdEvent.ordenId(), s.getOrdenId());
+                    Assertions.assertEquals(createdEvent.cantidad(), s.getCantidad());
+                    Assertions.assertNull(s.getFechaEnvio());
+                })
                 .verifyComplete();
 
-        // duplicate event
-        expectNoEvent(orderCreatedEvent);
-
-        // cancelled event & refund
-        var cancelledEvent = TestDataUtil.crearOrdenCanceladoEvento(orderCreatedEvent.ordenId());
-        expectEvent(cancelledEvent, PagoEvento.PagoReembolsado.class, e -> {
-            Assertions.assertNotNull(e.pagoId());
-            Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
-            Assertions.assertEquals(6, e.monto());
-        });
-
-        // check balance
-        this.repository.findById(1)
-                .as(StepVerifier::create)
-                .consumeNextWith(c -> Assertions.assertEquals(100, c.getSaldo()))
-                .verifyComplete();
-
-    }
-
-    @Test
-    public void refundWithoutDeductTest(){
-        var cancelledEvent = TestDataUtil.crearOrdenCanceladoEvento(UUID.randomUUID());
+        // emit order cancelled event
+        var cancelledEvent = TestDataUtil.crearOrdenCanceladoEvento(createdEvent.ordenId());
         expectNoEvent(cancelledEvent);
+
+        // check table for 0 record
+        this.repository.findByOrdenIdAndEstado(createdEvent.ordenId(), EnvioEstado.PENDIENTE)
+                .as(StepVerifier::create)
+                .verifyComplete();
+
     }
 
     @Test
-    public void customerNotFoundTest(){
-        var orderCreatedEvent = TestDataUtil.crearOrdenCreadoEvento(10, 1, 2, 3);
-        expectEvent(orderCreatedEvent, PagoEvento.PagoRechazado.class, e -> {
-            Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
-            Assertions.assertEquals(6, e.monto());
-            Assertions.assertEquals("Cliente no encontrado", e.mensaje());
+    public void planearYProgramarTest(){
+
+        // emit created event, expect no event
+        var createdEvent = TestDataUtil.crearOrdenCreadoEvento(1, 1, 2, 3);
+        expectNoEvent(createdEvent);
+
+        // emit order cancelled event
+        var completedEvent = TestDataUtil.crearOrdenCompletadoEvento(createdEvent.ordenId());
+        expectEvent(completedEvent, EnvioEvento.EnvioProgramado.class, e -> {
+            Assertions.assertEquals(createdEvent.ordenId(), e.ordenId());
+            Assertions.assertNotNull(e.envioId());
+            Assertions.assertNotNull(e.entregaEsperada());
         });
+
+        // duplicate completed event
+        expectNoEvent(completedEvent);
     }
 
-    @Test
-    public void insufficientBalanceTest(){
-        var orderCreatedEvent = TestDataUtil.crearOrdenCreadoEvento(1, 1, 2, 51);
-        expectEvent(orderCreatedEvent, PagoEvento.PagoRechazado.class, e -> {
-            Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
-            Assertions.assertEquals(102, e.monto());
-            Assertions.assertEquals("Saldo insuficiente", e.mensaje());
-        });
-    }
 
     private <T> void expectEvent(OrdenEvento event, Class<T> type, Consumer<T> assertion){
         resFlux
@@ -125,7 +116,7 @@ public class PagoSeviceTest extends AbstractIntegrationTest {
         }
 
         @Bean
-        public Consumer<Flux<PagoEvento>> pagoEventoConsumer(){
+        public Consumer<Flux<EnvioEvento>> envioEventoConsumer(){
             return f -> f.doOnNext(resSink::tryEmitNext).subscribe();
         }
 

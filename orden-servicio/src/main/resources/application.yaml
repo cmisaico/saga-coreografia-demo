@@ -1,13 +1,13 @@
 spring:
   cloud:
     function:
-      definition: ordenEventoProduce;pagoProcesador;inventarioProcesador;envioProcesador
+      definition: ordenEventoProducer;pagoProcesador;inventarioProcesador;envioProcesador
     stream:
       default:
         producer:
           useNativeEncoding: true
       bindings:
-#        ordenEventoProduce-out-0:
+#        ordenEventoProducer-out-0:
 #          destination: orden-eventos
 #        pagoProcesador-in-0:
 #          destination: pago-eventos
@@ -29,10 +29,10 @@ spring:
       kafka:
         binder:
           consumer-properties:
-            "value.deserializer": "org.springframework.kafka.support.serializer.JsonDeserializer"
-            "key.deserializer": "org.apache.kafka.common.serialization.StringDeserializer"
+            "value.deserializer": org.springframework.kafka.support.serializer.JsonDeserializer
+            "key.deserializer": org.apache.kafka.common.serialization.StringDeserializer
             "auto.offset.reset": "earliest"
             "spring.json.trusted.packages": "com.misaico.events.*"
           producer-properties:
-            "value.serializer": "org.springframework.kafka.support.serializer.JsonSerializer"
-            "key.serializer": "org.apache.kafka.common.serialization.StringSerializer"
+            "value.serializer": org.springframework.kafka.support.serializer.JsonSerializer
+            "key.serializer": org.apache.kafka.common.serialization.StringSerializer

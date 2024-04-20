@@ -21,8 +21,8 @@ import java.util.function.Consumer;
 
 @AutoConfigureWebTestClient
 @TestPropertySource(properties = {
-        "spring.cloud.function.definition=ordenEventoProduce;pagoProcesador;inventarioProcesador;envioProcesador;ordenEventoConsume",
-        "spring.cloud.stream.bindings.ordenEventoProduce-out-0.destination=orden-eventos",
+        "spring.cloud.function.definition=ordenEventoProducer;pagoProcesador;inventarioProcesador;envioProcesador;ordenEventoConsumer",
+        "spring.cloud.stream.bindings.ordenEventoProducer-out-0.destination=orden-eventos",
 })
 public class OrdenServiceTest extends AbstractIntegrationTest {
 

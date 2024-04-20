@@ -1,6 +1,7 @@
 package com.misaico.envio.application.service;
 
 
+import com.misaico.common.utils.DuplicadoEventoValidador;
 import com.misaico.envio.application.entity.Envio;
 import com.misaico.envio.application.mapper.EntityDtoMapper;
 import com.misaico.envio.application.repository.EnvioRepository;
@@ -23,35 +24,38 @@ import java.util.UUID;
 public class EnvioServiceImpl implements EnvioService {
 
     private static final Logger log = LoggerFactory.getLogger(EnvioServiceImpl.class);
-    private final EnvioRepository envioRepository;
+    private final EnvioRepository repository;
 
     @Override
     public Mono<Void> agregarEnvio(HorarioRequest request) {
-        return null;
+        return DuplicadoEventoValidador.validar(
+                this.repository.existsByOrdenId(request.ordenId()),
+                Mono.defer(() -> this.add(request))
+        );
     }
 
     private Mono<Void> add(HorarioRequest request){
         var envio = EntityDtoMapper.toEnvio(request);
         envio.setEstado(EnvioEstado.PENDIENTE);
-        return this.envioRepository.save(envio)
+        return this.repository.save(envio)
                 .then();
     }
 
     @Override
     public Mono<Void> cancelar(UUID ordenId) {
-        return this.envioRepository.deleteByOrdenId(ordenId);
+        return this.repository.deleteByOrdenId(ordenId);
     }
 
     @Override
     public Mono<EnvioDto> programar(UUID ordenId) {
-        return this.envioRepository.findByOrdenIdAndEstado(ordenId, EnvioEstado.PENDIENTE)
+        return this.repository.findByOrdenIdAndEstado(ordenId, EnvioEstado.PENDIENTE)
                 .flatMap(this::programar);
     }
 
     private Mono<EnvioDto> programar(Envio envio){
         envio.setFechaEnvio(Instant.now().plus(Duration.ofDays(3)));
         envio.setEstado(EnvioEstado.PROGRAMADO);
-        return this.envioRepository.save(envio)
+        return this.repository.save(envio)
                 .map(EntityDtoMapper::toDto);
     }
 }

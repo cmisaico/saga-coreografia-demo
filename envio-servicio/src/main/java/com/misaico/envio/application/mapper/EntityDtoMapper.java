@@ -10,7 +10,7 @@ public class EntityDtoMapper {
                 .clienteId(request.clienteId())
                 .ordenId(request.ordenId())
                 .productoId(request.productoId())
-                .cantidad(request.productoId())
+                .cantidad(request.cantidad())
                 .build();
     }
 
