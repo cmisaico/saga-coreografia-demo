@@ -25,7 +25,7 @@ public class OrdenController {
                 .map(ResponseEntity.accepted()::body);
     }
 
-    @GetMapping("all")
+    @GetMapping("todo")
     public Flux<OrdenCompraDto> obtenerTodasOrdenes(){
         return this.service.obtenerTodasOrdenes();
     }
