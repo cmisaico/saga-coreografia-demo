@@ -83,7 +83,7 @@ public class InventarioServiceTest extends AbstractIntegrationTest {
         expectEvent(orderCreatedEvent, InventarioEvento.InventarioRechazado.class, e -> {
             Assertions.assertEquals(orderCreatedEvent.ordenId(), e.ordenId());
             Assertions.assertEquals(11, e.cantidad());
-            Assertions.assertEquals("No hay stock", e.mensaje());
+            Assertions.assertEquals("Producto agotado", e.mensaje());
         });
     }
 

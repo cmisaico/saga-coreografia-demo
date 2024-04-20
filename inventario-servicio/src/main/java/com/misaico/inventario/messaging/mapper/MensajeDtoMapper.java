@@ -40,22 +40,13 @@ public class MensajeDtoMapper {
                 .build();
     }
 
-    public static Function<Throwable, Mono<PagoEvento>> toPagoRechazadoEvento(OrdenEvento.OrdenCreada evento){
-        return ex -> Mono.fromSupplier(() -> PagoEvento.PagoRechazado.builder()
-                .ordenId(evento.ordenId())
-                .monto(evento.montoTotal())
-                .clienteId(evento.clienteId())
-                .createdAt(Instant.now())
-                .mensaje(ex.getMessage())
-                .build());
-    }
-
     public static Function<Throwable, Mono<InventarioEvento>> toInventarioRechazadoEvento(OrdenEvento.OrdenCreada evento){
-        return ex -> Mono.fromSupplier(() -> InventarioEvento.InventarioDescontado.builder()
+        return ex -> Mono.fromSupplier(() -> InventarioEvento.InventarioRechazado.builder()
                 .ordenId(evento.ordenId())
                 .productoId(evento.productoId())
                 .cantidad(evento.cantidad())
                 .createdAt(Instant.now())
+                .mensaje(ex.getMessage())
                 .build()
         );
     }
